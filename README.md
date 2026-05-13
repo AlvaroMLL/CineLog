@@ -51,4 +51,4 @@ Depois, abra o link que o Vite mostrar no terminal.
 - Interface simples, responsiva e com tema escuro
 
 ## GitHub Pages
-Link para publicacao: (coloque o link aqui)
+Link para publicacao: https://alvaromll.github.io/CineLog/

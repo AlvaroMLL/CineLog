@@ -1,4 +1,3 @@
-// Este arquivo monta a interface e mexe no DOM.
 import { calcularMediaNotas } from "./filmes.js";
 
 const listaEl = document.querySelector("#lista-filmes");
@@ -6,7 +5,6 @@ const listaUsuarioEl = document.querySelector("#lista-usuario");
 const totalEl = document.querySelector("#total-filmes");
 const mediaEl = document.querySelector("#media-notas");
 
-// DOM: criando os cards com createElement e appendChild.
 export function renderCatalogo(lista, idsNaLista) {
   listaEl.replaceChildren();
 
@@ -18,7 +16,6 @@ export function renderCatalogo(lista, idsNaLista) {
     return;
   }
 
-  // map: transformando cada filme em um card.
   const cards = lista.map((filme) => criarCardCatalogo(filme, idsNaLista));
   cards.forEach((card) => listaEl.appendChild(card));
 }

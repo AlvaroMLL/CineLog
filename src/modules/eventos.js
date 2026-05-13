@@ -1,4 +1,3 @@
-// Este arquivo concentra os eventos com addEventListener.
 import {
   adicionarNaLista,
   atualizarNota,
@@ -27,7 +26,6 @@ function atualizarTela() {
 }
 
 export function iniciarEventos() {
-  // Evento de clique para adicionar no catalogo.
   listaCatalogo.addEventListener("click", (event) => {
     const alvo = event.target;
     const acao = alvo.dataset.acao;
@@ -43,7 +41,6 @@ export function iniciarEventos() {
     }
   });
 
-  // Evento de clique para remover da lista do usuario.
   listaUsuario.addEventListener("click", (event) => {
     const alvo = event.target;
     const acao = alvo.dataset.acao;
@@ -60,7 +57,6 @@ export function iniciarEventos() {
     }
   });
 
-  // Evento de mudanca do checkbox assistido.
   listaUsuario.addEventListener("change", (event) => {
     const alvo = event.target;
     if (alvo.dataset.acao === "assistido") {
@@ -76,7 +72,6 @@ export function iniciarEventos() {
     }
   });
 
-  // Evento de busca.
   busca.addEventListener("input", () => {
     atualizarTela();
   });

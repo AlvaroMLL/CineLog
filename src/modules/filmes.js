@@ -1,7 +1,5 @@
-// Este arquivo guarda a lista e as regras basicas dos filmes.
 import { carregarFilmes, salvarFilmes } from "./storage.js";
 
-// Catalogo fixo com 50 filmes disponiveis.
 const catalogoBase = [
   { titulo: "A Origem", genero: "Sci-Fi", tmdbQuery: "Inception" },
   { titulo: "Interestelar", genero: "Sci-Fi", tmdbQuery: "Interstellar" },
@@ -132,7 +130,6 @@ export function atualizarNota(id, nota) {
 }
 
 export function removerFilme(id) {
-  // filter: removendo o filme pelo id.
   minhaLista = minhaLista.filter((filme) => filme.id !== id);
   salvarFilmes(minhaLista);
 }
@@ -160,7 +157,6 @@ export function calcularMediaNotas(lista) {
     return 0;
   }
 
-  // reduce: somando as notas para calcular a media.
   const soma = lista.reduce((acc, filme) => acc + Number(filme.nota || 0), 0);
   const comNota = lista.filter((filme) => filme.nota !== null);
   if (comNota.length === 0) {
@@ -202,7 +198,6 @@ export async function carregarPostersTMDB() {
           cache[getChaveTMDB(filme)] = primeiro.poster_path;
         }
       } catch {
-        // Sem poster, segue com fallback.
       }
     })
   );

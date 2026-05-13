@@ -3,56 +3,56 @@ import { carregarFilmes, salvarFilmes } from "./storage.js";
 
 // Catalogo fixo com 50 filmes disponiveis.
 const catalogoBase = [
-  { titulo: "Inception", genero: "Sci-Fi" },
-  { titulo: "Interstellar", genero: "Sci-Fi" },
-  { titulo: "Whiplash", genero: "Drama" },
-  { titulo: "Arrival", genero: "Sci-Fi" },
-  { titulo: "Parasite", genero: "Thriller" },
-  { titulo: "The Batman", genero: "Action" },
-  { titulo: "The Social Network", genero: "Drama" },
-  { titulo: "Get Out", genero: "Horror" },
-  { titulo: "Blade Runner 2049", genero: "Sci-Fi" },
-  { titulo: "Mad Max Fury Road", genero: "Action" },
-  { titulo: "Dune", genero: "Sci-Fi" },
-  { titulo: "The Grand Budapest Hotel", genero: "Comedy" },
-  { titulo: "Black Swan", genero: "Drama" },
-  { titulo: "Her", genero: "Drama" },
-  { titulo: "Joker", genero: "Drama" },
-  { titulo: "La La Land", genero: "Musical" },
-  { titulo: "The Truman Show", genero: "Drama" },
-  { titulo: "The Matrix", genero: "Sci-Fi" },
-  { titulo: "Knives Out", genero: "Mystery" },
-  { titulo: "Spider-Man Into the Spider-Verse", genero: "Animation" },
-  { titulo: "Everything Everywhere All at Once", genero: "Sci-Fi" },
-  { titulo: "The Godfather", genero: "Crime" },
-  { titulo: "Pulp Fiction", genero: "Crime" },
-  { titulo: "Fight Club", genero: "Drama" },
-  { titulo: "The Shawshank Redemption", genero: "Drama" },
-  { titulo: "The Dark Knight", genero: "Action" },
-  { titulo: "Se7en", genero: "Thriller" },
-  { titulo: "The Prestige", genero: "Drama" },
-  { titulo: "The Silence of the Lambs", genero: "Thriller" },
-  { titulo: "The Green Mile", genero: "Drama" },
-  { titulo: "Gladiator", genero: "Action" },
-  { titulo: "The Lord of the Rings: The Fellowship", genero: "Fantasy" },
-  { titulo: "The Lord of the Rings: The Two Towers", genero: "Fantasy" },
-  { titulo: "The Lord of the Rings: The Return", genero: "Fantasy" },
-  { titulo: "Forrest Gump", genero: "Drama" },
-  { titulo: "The Lion King", genero: "Animation" },
-  { titulo: "Spirited Away", genero: "Animation" },
-  { titulo: "Coco", genero: "Animation" },
-  { titulo: "Toy Story", genero: "Animation" },
-  { titulo: "Your Name", genero: "Animation" },
-  { titulo: "The Wolf of Wall Street", genero: "Comedy" },
-  { titulo: "The Irishman", genero: "Crime" },
-  { titulo: "The Revenant", genero: "Adventure" },
-  { titulo: "1917", genero: "War" },
-  { titulo: "Oppenheimer", genero: "Drama" },
-  { titulo: "Barbie", genero: "Comedy" },
-  { titulo: "Django Unchained", genero: "Western" },
-  { titulo: "The Hateful Eight", genero: "Western" },
-  { titulo: "No Country for Old Men", genero: "Thriller" },
-  { titulo: "The Imitation Game", genero: "Drama" }
+  { titulo: "A Origem", genero: "Sci-Fi", tmdbQuery: "Inception" },
+  { titulo: "Interestelar", genero: "Sci-Fi", tmdbQuery: "Interstellar" },
+  { titulo: "Whiplash: Em Busca da Perfeicao", genero: "Drama", tmdbQuery: "Whiplash" },
+  { titulo: "A Chegada", genero: "Sci-Fi", tmdbQuery: "Arrival" },
+  { titulo: "Parasita", genero: "Thriller", tmdbQuery: "Parasite" },
+  { titulo: "The Batman", genero: "Action", tmdbQuery: "The Batman" },
+  { titulo: "A Rede Social", genero: "Drama", tmdbQuery: "The Social Network" },
+  { titulo: "Corra!", genero: "Horror", tmdbQuery: "Get Out" },
+  { titulo: "Blade Runner 2049", genero: "Sci-Fi", tmdbQuery: "Blade Runner 2049" },
+  { titulo: "Mad Max: Estrada da Furia", genero: "Action", tmdbQuery: "Mad Max Fury Road" },
+  { titulo: "Duna", genero: "Sci-Fi", tmdbQuery: "Dune" },
+  { titulo: "O Grande Hotel Budapeste", genero: "Comedy", tmdbQuery: "The Grand Budapest Hotel" },
+  { titulo: "Cisne Negro", genero: "Drama", tmdbQuery: "Black Swan" },
+  { titulo: "Ela", genero: "Drama", tmdbQuery: "Her" },
+  { titulo: "Coringa", genero: "Drama", tmdbQuery: "Joker" },
+  { titulo: "La La Land: Cantando Estacoes", genero: "Musical", tmdbQuery: "La La Land" },
+  { titulo: "O Show de Truman", genero: "Drama", tmdbQuery: "The Truman Show" },
+  { titulo: "Matrix", genero: "Sci-Fi", tmdbQuery: "The Matrix" },
+  { titulo: "Entre Facas e Segredos", genero: "Mystery", tmdbQuery: "Knives Out" },
+  { titulo: "Homem-Aranha no Aranhaverso", genero: "Animation", tmdbQuery: "Spider-Man Into the Spider-Verse" },
+  { titulo: "Tudo em Todo o Lugar ao Mesmo Tempo", genero: "Sci-Fi", tmdbQuery: "Everything Everywhere All at Once" },
+  { titulo: "O Poderoso Chefao", genero: "Crime", tmdbQuery: "The Godfather" },
+  { titulo: "Pulp Fiction: Tempo de Violencia", genero: "Crime", tmdbQuery: "Pulp Fiction" },
+  { titulo: "Clube da Luta", genero: "Drama", tmdbQuery: "Fight Club" },
+  { titulo: "Um Sonho de Liberdade", genero: "Drama", tmdbQuery: "The Shawshank Redemption" },
+  { titulo: "O Cavaleiro das Trevas", genero: "Action", tmdbQuery: "The Dark Knight" },
+  { titulo: "Seven: Os Sete Crimes Capitais", genero: "Thriller", tmdbQuery: "Se7en" },
+  { titulo: "O Grande Truque", genero: "Drama", tmdbQuery: "The Prestige" },
+  { titulo: "O Silencio dos Inocentes", genero: "Thriller", tmdbQuery: "The Silence of the Lambs" },
+  { titulo: "A Espera de um Milagre", genero: "Drama", tmdbQuery: "The Green Mile" },
+  { titulo: "Gladiador", genero: "Action", tmdbQuery: "Gladiator" },
+  { titulo: "O Senhor dos Aneis: A Sociedade do Anel", genero: "Fantasy", tmdbQuery: "The Lord of the Rings: The Fellowship" },
+  { titulo: "O Senhor dos Aneis: As Duas Torres", genero: "Fantasy", tmdbQuery: "The Lord of the Rings: The Two Towers" },
+  { titulo: "O Senhor dos Aneis: O Retorno do Rei", genero: "Fantasy", tmdbQuery: "The Lord of the Rings: The Return" },
+  { titulo: "Forrest Gump", genero: "Drama", tmdbQuery: "Forrest Gump" },
+  { titulo: "O Rei Leao", genero: "Animation", tmdbQuery: "The Lion King" },
+  { titulo: "A Viagem de Chihiro", genero: "Animation", tmdbQuery: "Spirited Away" },
+  { titulo: "Coco", genero: "Animation", tmdbQuery: "Coco" },
+  { titulo: "Toy Story", genero: "Animation", tmdbQuery: "Toy Story" },
+  { titulo: "Your Name", genero: "Animation", tmdbQuery: "Your Name" },
+  { titulo: "O Lobo de Wall Street", genero: "Comedy", tmdbQuery: "The Wolf of Wall Street" },
+  { titulo: "O Irlandes", genero: "Crime", tmdbQuery: "The Irishman" },
+  { titulo: "O Regresso", genero: "Adventure", tmdbQuery: "The Revenant" },
+  { titulo: "1917", genero: "War", tmdbQuery: "1917" },
+  { titulo: "Oppenheimer", genero: "Drama", tmdbQuery: "Oppenheimer" },
+  { titulo: "Barbie", genero: "Comedy", tmdbQuery: "Barbie" },
+  { titulo: "Django Livre", genero: "Western", tmdbQuery: "Django Unchained" },
+  { titulo: "Os Oito Odiados", genero: "Western", tmdbQuery: "The Hateful Eight" },
+  { titulo: "Onde os Fracos Nao Tem Vez", genero: "Thriller", tmdbQuery: "No Country for Old Men" },
+  { titulo: "O Jogo da Imitacao", genero: "Drama", tmdbQuery: "The Imitation Game" }
 ];
 
 const TMDB_KEY = import.meta.env.VITE_TMDB_KEY;
@@ -67,6 +67,7 @@ function criarFilmeCatalogo(filme, index) {
     id: `c${index + 1}`,
     titulo: filme.titulo,
     genero: filme.genero,
+    tmdbQuery: filme.tmdbQuery,
     posterUrl: null
   };
 }
@@ -181,7 +182,7 @@ export async function carregarPostersTMDB() {
   }
 
   const cache = carregarCacheTMDB();
-  const faltando = catalogo.filter((filme) => !cache[filme.titulo]);
+  const faltando = catalogo.filter((filme) => !cache[getChaveTMDB(filme)]);
 
   if (faltando.length === 0) {
     aplicarCache(cache);
@@ -191,14 +192,14 @@ export async function carregarPostersTMDB() {
   await Promise.all(
     faltando.map(async (filme) => {
       const url = `${TMDB_SEARCH}?api_key=${TMDB_KEY}&language=pt-BR&query=${encodeURIComponent(
-        filme.titulo
+        filme.tmdbQuery || filme.titulo
       )}`;
       try {
         const resposta = await fetch(url);
         const dados = await resposta.json();
         const primeiro = dados.results?.[0];
         if (primeiro?.poster_path) {
-          cache[filme.titulo] = primeiro.poster_path;
+          cache[getChaveTMDB(filme)] = primeiro.poster_path;
         }
       } catch {
         // Sem poster, segue com fallback.
@@ -228,7 +229,11 @@ function salvarCacheTMDB(cache) {
 
 function aplicarCache(cache) {
   catalogo.forEach((filme) => {
-    const posterPath = cache[filme.titulo];
+    const posterPath = cache[getChaveTMDB(filme)];
     filme.posterUrl = gerarPosterUrl(posterPath);
   });
+}
+
+function getChaveTMDB(filme) {
+  return filme.tmdbQuery || filme.titulo;
 }

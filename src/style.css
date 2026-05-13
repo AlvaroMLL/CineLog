@@ -380,6 +380,7 @@ button.secundario {
 .filme-conteudo {
   display: grid;
   gap: 8px;
+  height: 100%;
 }
 
 .filme h3 {
@@ -423,6 +424,7 @@ button.secundario {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: auto;
 }
 
 .nota-select {
@@ -436,6 +438,9 @@ button.secundario {
 .acoes-filme button {
   padding: 8px 10px;
   font-size: 13px;
+  min-width: 120px;
+  text-align: center;
+  height: 36px;
 }
 
 .acoes-filme button.remover {

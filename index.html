@@ -12,16 +12,10 @@
           <div class="marca">
             <span class="logo">CL</span>
             <div>
-              <p class="subtitulo">Caderno de filmes</p>
+              <p class="subtitulo">Backlog de filmes</p>
               <h1>CineLog</h1>
             </div>
           </div>
-          <div class="nav-links">
-            <a href="#" class="ativo">Diario</a>
-            <a href="#">Assistidos</a>
-            <a href="#">Quero ver</a>
-          </div>
-          <button type="button" class="btn-cta">Novo filme</button>
         </nav>
 
         <section class="hero">
@@ -29,16 +23,11 @@
             <p class="linha">Organize seu catalogo pessoal</p>
             <h2>Seu clube de cinema, no seu ritmo</h2>
             <p class="texto-muted">
-              Adicione filmes, marque como assistido e de uma nota simples.
+              Adicione filmes, marque como assistido e de uma nota.
             </p>
             <div class="hero-acoes">
               <a class="btn-cta" href="#catalogo">Ver catalogo</a>
-              <span class="texto-muted">Notas de 1 a 5, rapido e simples</span>
-            </div>
-            <div class="hero-tags">
-              <span class="tag destaque">Tema cinema</span>
-              <span class="tag">CRUD completo</span>
-              <span class="tag">LocalStorage</span>
+              <span class="texto-muted">Notas de 1 a 5, rapido</span>
             </div>
           </div>
 
@@ -54,78 +43,38 @@
           </div>
         </section>
 
-        <div class="hero-strip">
-          <div class="poster-sample p1">CL</div>
-          <div class="poster-sample p2">FILM</div>
-          <div class="poster-sample p3">LOG</div>
-          <div class="poster-sample p4">2026</div>
-        </div>
       </header>
 
       <main class="conteudo">
-        <section class="card form-card">
-          <h2>Adicionar ou editar filme</h2>
-          <form id="form-filme">
-            <input type="hidden" id="filme-id" />
-
-            <label>
-              Titulo
-              <input
-                type="text"
-                id="titulo"
-                placeholder="Ex: Interestelar"
-                required
-              />
-            </label>
-
-            <label>
-              Genero
-              <input
-                type="text"
-                id="genero"
-                placeholder="Ex: Ficcao cientifica"
-                required
-              />
-            </label>
-
-            <label>
-              Nota (1 a 5)
-              <select id="nota">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-              </select>
-            </label>
-
-            <label class="linha-check">
-              <input type="checkbox" id="assistido" />
-              <span>Ja assisti</span>
-            </label>
-
-            <div class="acoes">
-              <button type="submit" id="btn-salvar">Salvar</button>
-              <button type="button" id="btn-cancelar" class="secundario">
-                Cancelar
-              </button>
-            </div>
-          </form>
-          <p class="aviso" id="modo-edicao">Modo: adicionando</p>
-        </section>
-
         <section class="card lista-card" id="catalogo">
           <div class="linha-filtros">
-            <h2>Minha lista</h2>
+            <h2>Catalogo geral</h2>
             <input type="text" id="busca" placeholder="Buscar por titulo..." />
           </div>
 
           <div id="lista-filmes" class="lista"></div>
         </section>
+
+        <section class="card lista-card" id="minha-lista">
+          <div class="linha-filtros">
+            <h2>Minha lista</h2>
+            <span class="texto-muted">
+              So pode avaliar filmes marcados como assistidos.
+            </span>
+          </div>
+
+          <div id="lista-usuario" class="lista"></div>
+        </section>
       </main>
 
       <footer class="rodape">
         <p>Projeto simples com Vite + JavaScript</p>
+        <p class="tmdb">
+          This product uses the TMDB API but is not endorsed or certified by TMDB.
+          <a href="https://www.themoviedb.org/" target="_blank" rel="noreferrer">
+            TMDB
+          </a>
+        </p>
       </footer>
     </div>
 

@@ -1,9 +1,8 @@
 // Este arquivo guarda a lista e as regras basicas dos filmes.
 import { carregarFilmes, salvarFilmes } from "./storage.js";
 
-// Lista inicial simples para nao ficar vazio no primeiro uso.
-// Aqui os filmes ja aparecem, mas a nota fica vazia para o usuario avaliar.
-const filmesBase = [
+// Catalogo fixo com 50 filmes disponiveis.
+const catalogoBase = [
   { titulo: "Inception", genero: "Sci-Fi" },
   { titulo: "Interstellar", genero: "Sci-Fi" },
   { titulo: "Whiplash", genero: "Drama" },
@@ -23,90 +22,136 @@ const filmesBase = [
   { titulo: "The Truman Show", genero: "Drama" },
   { titulo: "The Matrix", genero: "Sci-Fi" },
   { titulo: "Knives Out", genero: "Mystery" },
-  { titulo: "Spider-Man Into the Spider-Verse", genero: "Animation" }
-].map((filme, index) => criarFilmeBase(filme, index));
+  { titulo: "Spider-Man Into the Spider-Verse", genero: "Animation" },
+  { titulo: "Everything Everywhere All at Once", genero: "Sci-Fi" },
+  { titulo: "The Godfather", genero: "Crime" },
+  { titulo: "Pulp Fiction", genero: "Crime" },
+  { titulo: "Fight Club", genero: "Drama" },
+  { titulo: "The Shawshank Redemption", genero: "Drama" },
+  { titulo: "The Dark Knight", genero: "Action" },
+  { titulo: "Se7en", genero: "Thriller" },
+  { titulo: "The Prestige", genero: "Drama" },
+  { titulo: "The Silence of the Lambs", genero: "Thriller" },
+  { titulo: "The Green Mile", genero: "Drama" },
+  { titulo: "Gladiator", genero: "Action" },
+  { titulo: "The Lord of the Rings: The Fellowship", genero: "Fantasy" },
+  { titulo: "The Lord of the Rings: The Two Towers", genero: "Fantasy" },
+  { titulo: "The Lord of the Rings: The Return", genero: "Fantasy" },
+  { titulo: "Forrest Gump", genero: "Drama" },
+  { titulo: "The Lion King", genero: "Animation" },
+  { titulo: "Spirited Away", genero: "Animation" },
+  { titulo: "Coco", genero: "Animation" },
+  { titulo: "Toy Story", genero: "Animation" },
+  { titulo: "Your Name", genero: "Animation" },
+  { titulo: "The Wolf of Wall Street", genero: "Comedy" },
+  { titulo: "The Irishman", genero: "Crime" },
+  { titulo: "The Revenant", genero: "Adventure" },
+  { titulo: "1917", genero: "War" },
+  { titulo: "Oppenheimer", genero: "Drama" },
+  { titulo: "Barbie", genero: "Comedy" },
+  { titulo: "Django Unchained", genero: "Western" },
+  { titulo: "The Hateful Eight", genero: "Western" },
+  { titulo: "No Country for Old Men", genero: "Thriller" },
+  { titulo: "The Imitation Game", genero: "Drama" }
+];
 
-function criarFilmeBase(filme, index) {
+const TMDB_KEY = import.meta.env.VITE_TMDB_KEY;
+const TMDB_IMAGE = "https://image.tmdb.org/t/p/w342";
+const TMDB_SEARCH = "https://api.themoviedb.org/3/search/movie";
+const TMDB_CACHE_KEY = "cinelog-tmdb-cache";
+
+const catalogo = catalogoBase.map((filme, index) => criarFilmeCatalogo(filme, index));
+
+function criarFilmeCatalogo(filme, index) {
   return {
-    id: `f${index + 1}`,
+    id: `c${index + 1}`,
     titulo: filme.titulo,
     genero: filme.genero,
+    posterUrl: null
+  };
+}
+
+function gerarPosterUrl(posterPath) {
+  if (!posterPath) {
+    return null;
+  }
+  return `${TMDB_IMAGE}${posterPath}`;
+}
+
+let minhaLista = carregarFilmes();
+
+if (!Array.isArray(minhaLista)) {
+  minhaLista = [];
+  salvarFilmes(minhaLista);
+}
+
+export function getCatalogo() {
+  return catalogo;
+}
+
+export function getMinhaLista() {
+  return minhaLista;
+}
+
+export function adicionarNaLista(catalogoId) {
+  if (minhaLista.some((filme) => filme.id === catalogoId)) {
+    return;
+  }
+
+  const filmeCatalogo = catalogo.find((filme) => filme.id === catalogoId);
+  if (!filmeCatalogo) {
+    return;
+  }
+
+  const novo = {
+    id: filmeCatalogo.id,
+    titulo: filmeCatalogo.titulo,
+    genero: filmeCatalogo.genero,
     nota: null,
     assistido: false,
-    posterUrl: gerarPosterUrl(filme.titulo)
-  };
-}
-
-function gerarPosterUrl(titulo) {
-  // Fotos simples via URL (nao depende de API).
-  const seed = encodeURIComponent(titulo.toLowerCase().replace(/\s+/g, "-"));
-  return `https://picsum.photos/seed/${seed}/320/480`;
-}
-
-let filmes = carregarFilmes();
-
-if (filmes.length === 0) {
-  filmes = filmesBase;
-  salvarFilmes(filmes);
-}
-
-export function getFilmes() {
-  return filmes;
-}
-
-export function adicionarFilme(dados) {
-  const novo = {
-    id: Date.now().toString(),
-    titulo: dados.titulo,
-    genero: dados.genero,
-    nota: Number(dados.nota),
-    assistido: dados.assistido,
-    posterUrl: gerarPosterUrl(dados.titulo)
+    posterUrl: filmeCatalogo.posterUrl
   };
 
-  filmes = [...filmes, novo];
-  salvarFilmes(filmes);
-  return novo;
+  minhaLista = [...minhaLista, novo];
+  salvarFilmes(minhaLista);
 }
 
-export function atualizarFilme(id, dados) {
-  // map: criando uma nova lista com o filme atualizado.
-  filmes = filmes.map((filme) => {
+export function atualizarNota(id, nota) {
+  minhaLista = minhaLista.map((filme) => {
     if (filme.id === id) {
-      return { ...filme, ...dados, nota: Number(dados.nota) };
+      if (!filme.assistido) {
+        return filme;
+      }
+      return { ...filme, nota: normalizarNota(nota) };
     }
     return filme;
   });
 
-  salvarFilmes(filmes);
+  salvarFilmes(minhaLista);
 }
 
 export function removerFilme(id) {
   // filter: removendo o filme pelo id.
-  filmes = filmes.filter((filme) => filme.id !== id);
-  salvarFilmes(filmes);
+  minhaLista = minhaLista.filter((filme) => filme.id !== id);
+  salvarFilmes(minhaLista);
 }
 
 export function toggleAssistido(id) {
-  filmes = filmes.map((filme) => {
+  minhaLista = minhaLista.map((filme) => {
     if (filme.id === id) {
       return { ...filme, assistido: !filme.assistido };
     }
     return filme;
   });
 
-  salvarFilmes(filmes);
+  salvarFilmes(minhaLista);
 }
 
-export function buscarPorId(id) {
-  return filmes.find((filme) => filme.id === id);
-}
-
-export function filtrarPorTitulo(termo) {
+export function filtrarPorTitulo(lista, termo) {
   const busca = termo.trim().toLowerCase();
 
   // filter: usado para buscar filmes pelo titulo.
-  return filmes.filter((filme) => filme.titulo.toLowerCase().includes(busca));
+  return lista.filter((filme) => filme.titulo.toLowerCase().includes(busca));
 }
 
 export function calcularMediaNotas(lista) {
@@ -116,5 +161,74 @@ export function calcularMediaNotas(lista) {
 
   // reduce: somando as notas para calcular a media.
   const soma = lista.reduce((acc, filme) => acc + Number(filme.nota || 0), 0);
-  return soma / lista.length;
+  const comNota = lista.filter((filme) => filme.nota !== null);
+  if (comNota.length === 0) {
+    return 0;
+  }
+  return soma / comNota.length;
+}
+
+function normalizarNota(valor) {
+  if (!valor) {
+    return null;
+  }
+  return Number(valor);
+}
+
+export async function carregarPostersTMDB() {
+  if (!TMDB_KEY) {
+    return;
+  }
+
+  const cache = carregarCacheTMDB();
+  const faltando = catalogo.filter((filme) => !cache[filme.titulo]);
+
+  if (faltando.length === 0) {
+    aplicarCache(cache);
+    return;
+  }
+
+  await Promise.all(
+    faltando.map(async (filme) => {
+      const url = `${TMDB_SEARCH}?api_key=${TMDB_KEY}&language=pt-BR&query=${encodeURIComponent(
+        filme.titulo
+      )}`;
+      try {
+        const resposta = await fetch(url);
+        const dados = await resposta.json();
+        const primeiro = dados.results?.[0];
+        if (primeiro?.poster_path) {
+          cache[filme.titulo] = primeiro.poster_path;
+        }
+      } catch {
+        // Sem poster, segue com fallback.
+      }
+    })
+  );
+
+  salvarCacheTMDB(cache);
+  aplicarCache(cache);
+}
+
+function carregarCacheTMDB() {
+  const bruto = localStorage.getItem(TMDB_CACHE_KEY);
+  if (!bruto) {
+    return {};
+  }
+  try {
+    return JSON.parse(bruto) || {};
+  } catch {
+    return {};
+  }
+}
+
+function salvarCacheTMDB(cache) {
+  localStorage.setItem(TMDB_CACHE_KEY, JSON.stringify(cache));
+}
+
+function aplicarCache(cache) {
+  catalogo.forEach((filme) => {
+    const posterPath = cache[filme.titulo];
+    filme.posterUrl = gerarPosterUrl(posterPath);
+  });
 }

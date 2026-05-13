@@ -1,52 +1,50 @@
 // Este arquivo concentra os eventos com addEventListener.
 import {
-  adicionarFilme,
-  atualizarFilme,
-  buscarPorId,
+  adicionarNaLista,
+  atualizarNota,
   filtrarPorTitulo,
-  getFilmes,
+  getCatalogo,
+  getMinhaLista,
   removerFilme,
   toggleAssistido
 } from "./filmes.js";
-import { atualizarResumo, limparForm, preencherForm, renderFilmes } from "./ui.js";
+import { atualizarResumo, renderCatalogo, renderMinhaLista } from "./ui.js";
 
-const form = document.querySelector("#form-filme");
-const lista = document.querySelector("#lista-filmes");
+const listaCatalogo = document.querySelector("#lista-filmes");
+const listaUsuario = document.querySelector("#lista-usuario");
 const busca = document.querySelector("#busca");
-const btnCancelar = document.querySelector("#btn-cancelar");
 
 function atualizarTela() {
   const termo = busca.value;
-  const listaFilmes = termo ? filtrarPorTitulo(termo) : getFilmes();
-  renderFilmes(listaFilmes);
-  atualizarResumo(listaFilmes);
+  const catalogo = getCatalogo();
+  const minhaLista = getMinhaLista();
+  const listaFilmes = termo ? filtrarPorTitulo(catalogo, termo) : catalogo;
+  const idsNaLista = new Set(minhaLista.map((filme) => filme.id));
+
+  renderCatalogo(listaFilmes, idsNaLista);
+  renderMinhaLista(minhaLista);
+  atualizarResumo(minhaLista);
 }
 
 export function iniciarEventos() {
-  // Evento de submit do formulario.
-  form.addEventListener("submit", (event) => {
-    event.preventDefault();
+  // Evento de clique para adicionar no catalogo.
+  listaCatalogo.addEventListener("click", (event) => {
+    const alvo = event.target;
+    const acao = alvo.dataset.acao;
+    const id = alvo.dataset.id;
 
-    const id = document.querySelector("#filme-id").value;
-    const dados = {
-      titulo: document.querySelector("#titulo").value.trim(),
-      genero: document.querySelector("#genero").value.trim(),
-      nota: document.querySelector("#nota").value,
-      assistido: document.querySelector("#assistido").checked
-    };
-
-    if (id) {
-      atualizarFilme(id, dados);
-    } else {
-      adicionarFilme(dados);
+    if (!acao || !id) {
+      return;
     }
 
-    limparForm();
-    atualizarTela();
+    if (acao === "adicionar") {
+      adicionarNaLista(id);
+      atualizarTela();
+    }
   });
 
-  // Evento de clique para editar/remover (delegacao simples).
-  lista.addEventListener("click", (event) => {
+  // Evento de clique para remover da lista do usuario.
+  listaUsuario.addEventListener("click", (event) => {
     const alvo = event.target;
     const acao = alvo.dataset.acao;
     const id = alvo.dataset.id;
@@ -60,20 +58,20 @@ export function iniciarEventos() {
       atualizarTela();
       return;
     }
-
-    if (acao === "editar") {
-      const filme = buscarPorId(id);
-      if (filme) {
-        preencherForm(filme);
-      }
-    }
   });
 
   // Evento de mudanca do checkbox assistido.
-  lista.addEventListener("change", (event) => {
+  listaUsuario.addEventListener("change", (event) => {
     const alvo = event.target;
     if (alvo.dataset.acao === "assistido") {
       toggleAssistido(alvo.dataset.id);
+      if (!alvo.checked) {
+        atualizarNota(alvo.dataset.id, "");
+      }
+      atualizarTela();
+    }
+    if (alvo.dataset.acao === "nota") {
+      atualizarNota(alvo.dataset.id, alvo.value);
       atualizarTela();
     }
   });
@@ -83,8 +81,4 @@ export function iniciarEventos() {
     atualizarTela();
   });
 
-  // Evento do botao cancelar.
-  btnCancelar.addEventListener("click", () => {
-    limparForm();
-  });
 }

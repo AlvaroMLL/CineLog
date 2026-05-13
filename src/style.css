@@ -23,6 +23,8 @@ body {
     radial-gradient(900px 500px at 90% 10%, #142436, transparent),
     linear-gradient(120deg, var(--bg-1), var(--bg-2));
   color: var(--text);
+  min-height: 100vh;
+  overflow-y: auto;
 }
 
 body::before {
@@ -217,6 +219,7 @@ body::before {
   grid-template-columns: 1fr 1.2fr;
   gap: 20px;
   padding: 8px 28px 32px;
+  flex: 1;
 }
 
 .card {
@@ -304,6 +307,10 @@ button.secundario {
 
 .lista-card {
   min-height: 420px;
+  display: flex;
+  flex-direction: column;
+  max-height: 70vh;
+  overflow: hidden;
 }
 
 .linha-filtros {
@@ -318,6 +325,8 @@ button.secundario {
   display: grid;
   gap: 16px;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  overflow-y: auto;
+  padding-right: 8px;
 }
 
 .filme {
@@ -416,6 +425,14 @@ button.secundario {
   flex-wrap: wrap;
 }
 
+.nota-select {
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: #0d141e;
+  color: var(--text);
+  padding: 8px 10px;
+}
+
 .acoes-filme button {
   padding: 8px 10px;
   font-size: 13px;
@@ -434,6 +451,16 @@ button.secundario {
   font-size: 13px;
 }
 
+.tmdb {
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+
+.tmdb a {
+  color: var(--accent-2);
+  text-decoration: none;
+}
+
 @keyframes subir {
   from {
     transform: translateY(8px);
@@ -448,6 +475,10 @@ button.secundario {
 @media (max-width: 900px) {
   .conteudo {
     grid-template-columns: 1fr;
+  }
+
+  .lista-card {
+    max-height: none;
   }
 
   .hero {

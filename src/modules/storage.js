@@ -1,5 +1,5 @@
 // Este arquivo cuida apenas do LocalStorage.
-const CHAVE = "cinelog-filmes";
+const CHAVE = "cinelog-minha-lista";
 
 // Salva a lista no LocalStorage.
 export function salvarFilmes(lista) {
